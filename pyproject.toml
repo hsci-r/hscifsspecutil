@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "hscifsspecutil"
+version = "0.1.0"
+description = "FsSpec and S3FS utilities"
+authors = ["Eetu Mäkelä <eetu.makela@helsinki.fi>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4"
+fsspec = "^2024.9.0"
+s3fs = "^2024.9.0"
+morefs = {extras = ["asynclocalfs"], version = "^0.2.2"}
+multiprocessing-utils = "^0.4"
+pyyaml = "^6.0.2"
+tqdm = "^4.66.5"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
