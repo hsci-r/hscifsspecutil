@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hscifsspecutil"
-version = "0.1.0"
+version = "0.1.1"
 description = "FsSpec and S3FS utilities"
 authors = ["Eetu Mäkelä <eetu.makela@helsinki.fi>"]
 license = "MIT"

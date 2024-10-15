@@ -344,10 +344,13 @@ async def _fetch_and_transform_async(afetcher: AFetcher, start_offset: int, end_
     data = await afetcher(start_offset, end_offset)
     return transform(data)
 
-
 async def _fetch_and_transform_multiple_async(afetcher: AFetcher, offsets: Iterable[Tuple[int, int]], transform: Callable[[bytes], T_co]) -> list[T_co]:
     return await asyncio.gather(*[_fetch_and_transform_async(afetcher, start_offset, end_offset, transform) for start_offset, end_offset in offsets])
 
+def fetch_and_transform_async(afetcher: AFetcher, offsets: Iterable[Tuple[int, int]], transform: Callable[[bytes], T_co]) -> list[T_co]:
+    ret = asyncio.run_coroutine_threadsafe(_fetch_and_transform_multiple_async(
+        afetcher, offsets, transform), fsspec.asyn.get_loop()).result()
+    return ret
 
 async def _multi_fetch_and_transform_async(tasks: Iterable[Tuple[AFetcher, Iterable[Tuple[int, int]], Callable[[bytes], T_co]]]) -> list[list[T_co]]:
     return await asyncio.gather(*[_fetch_and_transform_multiple_async(afetcher, offsets_and_sizes, transform) for afetcher, offsets_and_sizes, transform in tasks])
