@@ -216,7 +216,7 @@ async def cat_file_afetcher(fs: AsyncFileSystem, urlpath: str, start: int, end: 
     return await fs._cat_file(urlpath, start=start, end=end)
 
 
-def get_cache(fs: AsyncFileSystem, urlpath: str, size: int, cache_dir: str, blocksize: int, parallel_timeout: int, cache_mapper: AbstractCacheMapper) -> SharedMMapCache:
+def get_cache(fs: AsyncFileSystem, urlpath: str, size: int, cache_dir: str, blocksize: int = 65536, parallel_timeout: int = 30, cache_mapper: AbstractCacheMapper = PathCacheMapper()) -> SharedMMapCache:
     if not os.path.exists(cache_dir):
         os.makedirs(cache_dir, exist_ok=True)
 
